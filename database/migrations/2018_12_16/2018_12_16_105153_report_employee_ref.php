@@ -20,7 +20,7 @@ class ReportEmployeeRef extends Migration
             $table->integer('employee_id')->unsigned();
 
             $table->foreign('report_id')->references('id')->on('reports');
-            $table->foreign('employee_id')->references('id')->on('employees');
+            $table->foreign('employee_id')->references('id')->on('EmployeesSeeder');
             $table->timestamps();
         });
     }

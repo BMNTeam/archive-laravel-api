@@ -19,7 +19,7 @@ class EmployeeArticleRef extends Migration
             $table->integer('employee_id')->unsigned();
             $table->integer('article_id')->unsigned();
 
-            $table->foreign('employee_id')->references('id')->on('employees');
+            $table->foreign('employee_id')->references('id')->on('EmployeesSeeder');
             $table->foreign('article_id')->references('id')->on('articles');
             $table->timestamps();
         });

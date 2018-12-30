@@ -19,7 +19,6 @@ class Employees extends Migration
             $table->string('full_name');
             $table->string('degree');
             $table->string('position');
-            $table->integer('article_id');
 
             $table->timestamps();
         });

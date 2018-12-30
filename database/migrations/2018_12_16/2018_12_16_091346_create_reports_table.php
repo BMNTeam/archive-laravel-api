@@ -25,7 +25,7 @@ class CreateReportsTable extends Migration
             $table->string('presentation_url');
 
             $table->integer('manager_id')->unsigned();
-            $table->foreign('manager_id')->references('id')->on('employees');
+            $table->foreign('manager_id')->references('id')->on('EmployeesSeeder');
 
             $table->timestamps();
         });
