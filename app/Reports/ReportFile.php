@@ -4,13 +4,12 @@ namespace App\Reports;
 
 use \Illuminate\Http\UploadedFile;
 
-// TODO check out which methods has to me private and which of them might still protected
-class ReportFile
+abstract class ReportFileGeneric
 {
     private $file;
     private $path;
 
-    public function __construct(UploadedFile $file, string $report_name)
+    public function __construct(UploadedFile $file, string $report_name = '')
     {
         $this->file = $file;
         $this->path = $this->save($this->getPreparedString($report_name, true)
@@ -24,11 +23,8 @@ class ReportFile
         return $this->file->storeAs($this->getPath($prepared_name), $file_name);
     }
 
-    protected function getPath(string $report_name): string
-    {
+    abstract protected function getPath(string $report_name): string;
 
-        return "reports/${report_name}";
-    }
 
     public function getFullPath()
     {
@@ -58,4 +54,20 @@ class ReportFile
     }
 
 
+}
+
+class ReportFile extends ReportFileGeneric
+{
+    protected function getPath(string $report_name): string
+    {
+        return "reports/$report_name";
+    }
+}
+
+class ArticleFile extends ReportFileGeneric
+{
+    protected function getPath(string $report_name): string
+    {
+        return "articles";
+    }
 }

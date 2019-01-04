@@ -38,7 +38,7 @@ class ReportController extends Controller
      */
     public function store(Request  $request)
     {
-        //
+        // TODO refactor as a normal functions
         $short_report_file = new ReportFile($request->short_report, $request->name);
         $full_report_file = new ReportFile($request->full_report, $request->name);
         $presentation_file = new ReportFile($request->presentation, $request->name);
@@ -56,12 +56,7 @@ class ReportController extends Controller
         $report->presentation_url = $presentation_file->getFullPath();
 
 
-        $report->save();
-//        $all = $request->all();
-//        $file = new ReportFile($request->short_report, $request->name);
-//        $content = $file->getFileContent();
-//        var_dump($content);
-
+        $result = $report->save();
 
     }
 
