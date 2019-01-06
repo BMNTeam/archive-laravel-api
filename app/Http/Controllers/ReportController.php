@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Report;
 use App\Reports\ReportFile;
 use Illuminate\Http\Request;
+use Illuminate\Http\Response;
 
 class ReportController extends Controller
 {
@@ -16,6 +17,7 @@ class ReportController extends Controller
     public function index()
     {
         //
+        return new Response(Report::all());
     }
 
     /**
@@ -26,7 +28,6 @@ class ReportController extends Controller
     public function create( )
     {
         //
-
 
     }
 
@@ -47,7 +48,7 @@ class ReportController extends Controller
         $report->name = $request->name;
         $report->theme_number = $request->theme_number;
         $report->date = strtotime($request->date);
-        $report->manager_id = 1; //$request->manager;
+        $report->manager_id = json_decode($request->manager)->value;
 
         $report->short_report_text = $short_report_file->getFileContent();
         $report->short_report_url = $short_report_file->getFullPath();
@@ -56,8 +57,20 @@ class ReportController extends Controller
         $report->presentation_url = $presentation_file->getFullPath();
 
 
-        $result = $report->save();
+        $report->save();
 
+        $report->employees()->attach($this->getIdsList($request->employees));
+        $report->articles()->attach($this->getIdsList($request->articles));
+
+        return new Response($report, 200);
+    }
+
+    private function getIdsList(string $json_str)
+    {
+        return array_map(
+            function($d) { return $d->value; },
+            json_decode($json_str)
+        );
     }
 
 

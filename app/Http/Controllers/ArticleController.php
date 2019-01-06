@@ -16,6 +16,7 @@ class ArticleController extends Controller
     public function index()
     {
         //
+        return new Response(Article::all());
     }
 
     /**

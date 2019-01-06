@@ -16,4 +16,10 @@ class Article extends Model
     {
         return $this->belongsToMany('App\Employee', 'employee_article_ref', 'article_id', 'employee_id');
     }
+
+    public function reports()
+    {
+        return $this->belongsToMany('App\Report', 'report_article_ref', 'article_id', 'report_id');
+    }
+
 }

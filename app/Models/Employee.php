@@ -9,6 +9,11 @@ class Employee extends Model
 
     public function articles()
     {
-        $this->belongsToMany('App\Article', 'employee_article_ref', 'employee_id', 'article_id');
+        return $this->belongsToMany('App\Article', 'employee_article_ref', 'employee_id', 'article_id');
+    }
+
+    public function reports()
+    {
+        return $this->belongsToMany('App\Report', 'report_employee_ref', 'employee_id', 'report_id');
     }
 }
