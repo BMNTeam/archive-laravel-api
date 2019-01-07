@@ -23,6 +23,7 @@ Route::middleware('auth:api')->group(function()
     Route::resource('employees', 'EmployeeController');
     Route::resource('journals', 'JournalController');
     Route::resource('articles', 'ArticleController');
+    Route::post('/search', 'SearchController@search');
 
 });
 
