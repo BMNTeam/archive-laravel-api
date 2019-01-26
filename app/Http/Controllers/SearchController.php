@@ -37,6 +37,9 @@ class SearchController extends Controller
         if($request->type === "report")
         {
             $res = Report::where('id', $request->id)->first();
+            $res["articles"] = $res->articles()->get();
+            $res["manager"] = $res->manager()->first();
+            $res["employees"] = $res->employees()->get();
         }
 
         return $res;

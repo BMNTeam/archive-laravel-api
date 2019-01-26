@@ -11,7 +11,7 @@ class Report extends Model
 
     public function manager()
     {
-        return $this->hasOne('App\Manager');
+        return $this->hasOne('App\Manager', 'id');
     }
 
     public function articles()
