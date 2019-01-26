@@ -2,11 +2,15 @@
 namespace App\Http\Controllers;
 
 use App\Reference;
+use App\Reports\ReferenceFile;
 use Illuminate\Http\Request;
 use Illuminate\Http\Response;
+use App\Http\Controllers\GetIdsList;
+
 
 class ReferenceController extends Controller
 {
+    use GetIdsList;
     /**
      * Display a listing of the resource.
      *
@@ -37,15 +41,27 @@ class ReferenceController extends Controller
      */
     public function store(Request  $request)
     {
-        $journal = new Reference();
+        // TODO refactor as a normal functions
+        $short_report_file = new ReferenceFile($request->text, $request->name);
 
-        $journal->name = $request->name;
-        $journal->url = $request->url;
+        $report = new Reference();
+        $report->name = $request->name;
+        $report->theme_number = $request->theme_number;
+        $report->date = strtotime($request->date);
+        $report->manager_id = json_decode($request->manager)->value;
 
-        $journal->save();
+        $report->text = $short_report_file->getFileContent();
+        $report->url = $short_report_file->getFullPath();
 
-        new Response($journal, 200);
+
+        $report->save();
+
+        $report->employees()->attach($this->getIdsList($request->employees));
+
+        return new Response($report, 200);
     }
+
+
 
 
 

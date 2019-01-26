@@ -7,8 +7,20 @@ use App\Reports\ReportFile;
 use Illuminate\Http\Request;
 use Illuminate\Http\Response;
 
+trait GetIdsList {
+
+    private function getIdsList(string $json_str)
+    {
+        return array_map(
+            function($d) { return $d->value; },
+            json_decode($json_str)
+        );
+    }
+}
+
 class ReportController extends Controller
 {
+    use getIdsList;
     /**
      * Display a listing of the resource.
      *
@@ -64,16 +76,6 @@ class ReportController extends Controller
 
         return new Response($report, 200);
     }
-
-    private function getIdsList(string $json_str)
-    {
-        return array_map(
-            function($d) { return $d->value; },
-            json_decode($json_str)
-        );
-    }
-
-
 
     /**
      * Display the specified resource.

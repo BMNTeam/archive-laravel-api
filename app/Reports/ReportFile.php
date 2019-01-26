@@ -40,9 +40,9 @@ abstract class ReportFileGeneric
     private function getPreparedString(string $str, bool $cut = false): string
     {
         $str = trim($str);
-        $str = strtolower($str);
         $str = str_replace(' ', '_', $str);
         $str = transliterator_transliterate('Russian-Latin/BGN', $str);
+        $str = strtolower($str);
         return $cut ? substr($str, 0, 20) : $str;
     }
 
@@ -61,6 +61,14 @@ class ReportFile extends ReportFileGeneric
     protected function getPath(string $report_name): string
     {
         return "reports/$report_name";
+    }
+}
+
+class ReferenceFile extends ReportFileGeneric
+{
+    protected function getPath(string $reference_name): string
+    {
+        return "references/$reference_name";
     }
 }
 
