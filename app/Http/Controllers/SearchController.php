@@ -1,6 +1,7 @@
 <?
 namespace App\Http\Controllers;
 
+use App\Reference;
 use Illuminate\Http\Request;
 use Illuminate\Http\Response;
 use App\Search;
@@ -13,10 +14,22 @@ class SearchController extends Controller
     public function search(Request $request)
     {
         $search_str = $request->search;
-        $reports = Report::where('name', 'like', "%$search_str%")
-            ->orWhere('short_report_text', 'like', "%$search_str%")
-            ->orWhere('full_report_text', 'like', "%$search_str%")
-            ->get();
+
+        $reports = $this->getReportsCollection($search_str);
+        $references = $this->getReferencesCollection($search_str);
+
+        // TODO: finish with response depending on search type option
+
+        if($request->type === 'report')
+        {
+        }
+
+        if($request->type === 'reference')
+        {
+        }
+
+
+
         // $items = $reports->all();
         // TODO: reorder items by rank
 //        $results = array_map(
@@ -25,10 +38,27 @@ class SearchController extends Controller
 //            array_fill(0, count($items), $search_str)
 //        );
         // $name =
-        $results = $this->getAsSearchResults($reports);
+        $reports =$this->getAsSearchResults($reports);
+        $references = $this->getAsSearchResults($references, false);
+        $results = array_merge($references, $reports);
 
 
         return new Response($results);
+    }
+
+    private function getReferencesCollection(string $search_str)
+    {
+        return Reference::where('name', 'like', "%$search_str%")
+            ->orWhere('text', 'like', "%$search_str%")
+            ->get();
+    }
+
+    private function getReportsCollection(string $search_str)
+    {
+        return Report::where('name', 'like', "%$search_str%")
+            ->orWhere('short_report_text', 'like', "%$search_str%")
+            ->orWhere('full_report_text', 'like', "%$search_str%")
+            ->get();
     }
 
     public function getSingle(Request $request)
@@ -55,7 +85,7 @@ class SearchController extends Controller
                 'name' => $r->name,
                 'authors' => $r->employees,
                 'type' => $type_report ? "report" : "reference",
-                'short_report_text' => substr($r->short_report_text, 0, 400)."..."
+                'text' => substr($type_report ? $r->short_report_text : $r->text, 0, 400)."..."
             ];
         } ,$reports->all(), array_fill(0, count($reports->all()), $type_report));
     }

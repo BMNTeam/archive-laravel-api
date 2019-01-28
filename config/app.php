@@ -178,7 +178,10 @@ return [
         App\Providers\RouteServiceProvider::class,
 
         /*Custom*/
-        Laravel\Passport\PassportServiceProvider::class
+        Laravel\Passport\PassportServiceProvider::class,
+
+        /*Cors*/
+        Barryvdh\Cors\ServiceProvider::class,
 
     ],
 
