@@ -29,4 +29,7 @@ Route::middleware('auth:api')->group(function()
 
 });
 
+// TODO: !!!urgent find solution more secure!!!
+Route::get('/download', 'SearchController@download');
+
 
