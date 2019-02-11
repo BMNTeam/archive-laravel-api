@@ -2,6 +2,7 @@
 namespace App\Http\Controllers;
 
 use App\Article;
+use App\Journal;
 use App\Reports\ArticleFile;
 use Illuminate\Http\Request;
 use Illuminate\Http\Response;
@@ -16,7 +17,12 @@ class ArticleController extends Controller
     public function index()
     {
         //
-        return new Response(Article::all());
+        $articles = Article::all();
+        foreach ($articles as $article)
+        {
+            $article['journal']= Journal::where('id', $article->journal_id)->first();
+        }
+        return new Response($articles);
     }
 
     /**
