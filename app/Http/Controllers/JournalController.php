@@ -45,7 +45,7 @@ class JournalController extends Controller
 
         $journal->save();
 
-        new Response($journal, 200);
+        return new Response($journal, 200);
     }
 
 

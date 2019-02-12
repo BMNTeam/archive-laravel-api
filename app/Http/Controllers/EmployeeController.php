@@ -46,6 +46,8 @@ class EmployeeController extends Controller
 
         $employee->save();
 
+        return new Response($employee);
+
 
     }
 

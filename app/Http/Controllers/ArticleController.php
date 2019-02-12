@@ -20,9 +20,14 @@ class ArticleController extends Controller
         $articles = Article::all();
         foreach ($articles as $article)
         {
-            $article['journal']= Journal::where('id', $article->journal_id)->first();
+            $this->getJournal($article);
         }
         return new Response($articles);
+    }
+
+    private function getJournal(Article $article)
+    {
+        $article["journal"] = Journal::where('id', $article->journal_id)->first();
     }
 
     /**
@@ -60,6 +65,7 @@ class ArticleController extends Controller
         $article->save();
 
         $article->authors()->attach($authors_ids);
+        $this->getJournal($article);
 
         return new Response($article);
 
