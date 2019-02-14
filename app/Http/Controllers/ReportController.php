@@ -64,7 +64,7 @@ class ReportController extends Controller
 
         $report->short_report_text = $short_report_file->getFileContent();
         $report->short_report_url = $short_report_file->getFullPath();
-        $report->full_report_text = $full_report_file->getFileContent();
+        $report->full_report_text = ""; // TODO: refactor with big data $full_report_file->getFileContent();
         $report->full_report_url = $full_report_file->getFullPath();
         $report->presentation_url = $presentation_file->getFullPath();
 
