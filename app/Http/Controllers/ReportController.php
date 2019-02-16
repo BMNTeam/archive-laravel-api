@@ -29,7 +29,12 @@ class ReportController extends Controller
     public function index()
     {
         //
-        return new Response(Report::all());
+        $reports = Report::all();
+        foreach ($reports as $report)
+        {
+            $report['manager'] = $report->manager()->first();
+        }
+        return new Response($reports);
     }
 
     /**
