@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Report;
+use App\Manager;
 use App\Reports\ReportFile;
 use Illuminate\Http\Request;
 use Illuminate\Http\Response;
@@ -32,7 +33,7 @@ class ReportController extends Controller
         $reports = Report::all();
         foreach ($reports as $report)
         {
-            $report['manager'] = $report->manager()->first();
+            $report['manager'] = Manager::where("id", $report->manager_id)->first();
         }
         return new Response($reports);
     }
