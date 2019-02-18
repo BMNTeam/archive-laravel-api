@@ -3,6 +3,7 @@ namespace App\Http\Controllers;
 
 use App\Journal;
 use App\Reference;
+use App\Manager;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Http\Request;
 use Illuminate\Http\Response;
@@ -98,7 +99,7 @@ class SearchController extends Controller
 
     private function getLinkedData(Model $res)
     {
-        $res["manager"] = $res->manager()->first();
+        $res["manager"] = Manager::where("id", $res->manager_id)->first();
         $res["employees"] = $res->employees()->get();
         return $res;
     }
