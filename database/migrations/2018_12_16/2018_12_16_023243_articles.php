@@ -16,7 +16,7 @@ class Articles extends Migration
         //
         Schema::create('articles', function (Blueprint $table) {
             $table->increments('id');
-            $table->string('name');
+            $table->longText('name');
             $table->string('authors');
             $table->string('journal_id');
             $table->longText('full_text');
