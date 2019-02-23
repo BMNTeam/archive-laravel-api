@@ -19,6 +19,8 @@ class ReferenceController extends Controller
     public function index()
     {
         //
+        $references = Reference::all();
+        return new Response($references);
     }
 
     /**
