@@ -85,7 +85,7 @@ class SearchController extends Controller
                 $article['journal']= Journal::where('id', $article->journal_id)->first();
             }
             $res["articles"] = $articles;
-            $res = $this->getLinkedData($res);
+            $res = $this->getLinkedData($res, true);
             return new Response($res);
         }
 
@@ -97,9 +97,11 @@ class SearchController extends Controller
         }
     }
 
-    private function getLinkedData(Model $res)
+    private function getLinkedData(Model $res, $with_manager = false)
     {
-        $res["manager"] = Manager::where("id", $res->manager_id)->first();
+        if($with_manager) {
+            $res["manager"] = Manager::where("id", $res->manager_id)->first();
+        };
         $res["employees"] = $res->employees()->get();
         return $res;
     }

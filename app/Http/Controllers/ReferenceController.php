@@ -48,7 +48,6 @@ class ReferenceController extends Controller
         $report->name = $request->name;
         $report->theme_number = $request->theme_number;
         $report->date = strtotime($request->date);
-        $report->manager_id = json_decode($request->manager)->value;
 
         $report->text = $short_report_file->getFileContent();
         $report->url = $short_report_file->getFullPath();
