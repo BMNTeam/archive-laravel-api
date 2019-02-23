@@ -21,9 +21,6 @@ class Reference extends Migration
             $table->longText('text');
             $table->string('url');
 
-            $table->integer('manager_id')->unsigned();
-            $table->foreign('manager_id')->references('id')->on('employees');
-
             $table->timestamps();
         });
     }
