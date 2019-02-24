@@ -114,7 +114,7 @@ class SearchController extends Controller
                 'name' => $r->name,
                 'authors' => $r->employees,
                 'type' => $type_report ? "report" : "reference",
-                'text' => substr($type_report ? $r->short_report_text : $r->text, 0, 400)."..."
+                'text' => mb_substr($type_report ? $r->short_report_text : $r->text, 0, 400)."..."
             ];
         } ,$reports->all(), array_fill(0, count($reports->all()), $type_report));
     }
